@@ -1,0 +1,100 @@
+#include<stdio.h>
+#include<conio.h>
+#include<string.h>
+
+struct emp{
+	   char ename[10];
+	   int idno,age;
+
+    };
+
+
+ void bubblesort(struct emp a[],int n){
+                int pass,i;
+				
+		struct emp t;
+                for(pass=1;pass<n;pass++){
+                   for(i=0;i<=n-1-pass;i++){
+		       if(a[i].age>a[i+1].age){
+                           t=a[i];
+                           a[i]=a[i+1];
+                           a[i+1]=t;
+                        }
+                    }
+                }
+        }
+//write into file 
+
+void writeintofile(struct emp x[],int n){
+		 FILE *fp;
+			 int i;
+			 fp=fopen("EMPLOY.txt","w");
+
+			 printf("\n Enter % details of employ :- \n ID NO\n NAME\n AGE ");
+	     for(i=0;i<n;i++){
+		 scanf("%d",&x[i].idno);
+		 scanf("%s",x[i].ename);
+		 scanf("%d",&x[i].age);
+	     }
+	     //NOW WRITE INTO FILE
+			 for(i=0;i<n;i++){
+				 fprintf(fp,"ID NO :-%d\t",x[i].idno);
+				 fprintf(fp,"NSME :-%s\t",x[i].ename);
+				 fprintf(fp,"AGE:-%d\n",x[i].age);
+			 }
+			 fclose(fp);
+	}
+
+
+ //diaplay out put
+ void display(struct emp x[],int n) {
+	      FILE *fp;
+	      int i;
+
+	    fp=fopen("EMPLOY.txt","w");
+
+	    for(i=0;i<n;i++){
+	       fprintf(fp,"ID NO :-%d\t",x[i].idno);
+	       fprintf(fp,"NSME :-%s\t",x[i].ename);
+	       fprintf(fp,"AGE:-%d\n",x[i].age);
+	    }
+	    fclose(fp);
+	}
+void readintofile(struct emp x[],int n){
+		 FILE *fp;
+		 int i;
+		 fp=fopen("EMPLOY.txt","r");
+
+	     //NOW read from FILE
+
+	     for(i=0;i<n;i++){
+		 fscanf(fp,"%d",&x[i].idno);
+		 fscanf(fp,"%s",x[i].ename);
+		 fscanf(fp,"%d",&x[i].age);
+	      }
+	    fclose(fp);
+
+	}
+
+
+
+  main(){
+
+     int n;
+     struct emp x[10];
+     clrscr();
+     printf("\n Enter how many records are insert ? = ");
+     scanf("%d",&n);
+    // writeintofile(x,n);
+     readintofile(x,n);
+     bubblesort(x,n);
+     display(x,n);
+
+	 /*
+       printf("%s\t",x[i].bname);
+       printf("%d\t",x[i].price);
+       printf("%d\n",x[i].publication);
+     }*/
+     getch();
+     return(0);
+    }

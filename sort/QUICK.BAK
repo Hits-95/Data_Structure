@@ -1,0 +1,66 @@
+#include<stdio.h>
+#include<conio.h>
+
+partion(int x[],int lb ,int ub)
+{
+  int pivot,t,dn,up;
+  dn=lb+1;
+  pivot=x[lb];
+  up=ub;
+  do
+  {
+    while(x[dn]<pivot && dn<=ub)
+    dn++;
+    while(x[up]>pivot && up>lb)
+    up--;
+
+    if(dn<up)
+    {
+     t=x[up];
+     x[up]=x[dn];
+     x[dn]=t;
+     }
+     }while(dn<up);
+    x[lb]=x[up];
+    x[up]=pivot;
+    return(up);
+   }
+void qsort(int x[],int lb,int ub)
+ {
+ int j;
+  while(lb<ub)
+  {
+   j=partion(x,lb,ub);
+   qsort(x,lb,j-1);
+   qsort(x,j+1,ub);
+  }
+ }
+ void readarray(int x[],int n)
+ {
+  printf("\n Enter %d nno`s",n);
+  for(int i=0;i<n;i++)
+  {
+   scanf("%d",&x[i]);
+   }
+  }
+
+  void display(int x[],int n)
+  {
+  printf("\n The sort no`s are = \n");
+  for(int i=0;i<n;i++)
+  {
+   printf(" %d\n",x[i]);
+   }
+  }
+
+void main()
+{
+ int a[10],n;
+ clrscr();
+ printf("\n How many no`s are you enter ");
+ scanf("%d",&n);
+ readarray(a,n);
+ qsort(a,0,n-1);
+ display(a,n);
+ getch();
+}
