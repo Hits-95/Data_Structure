@@ -1,6 +1,7 @@
-#include"stdio.h"
-#include"conio.h"
-#include"malloc.h"
+#include "stdio.h"
+#include "conio.h"
+#include "malloc.h"
+#include "stdlib.h" //use for exite(0) functiion
 
 struct node{
 	int data;
@@ -62,7 +63,7 @@ NODEPTR insEnd(NODEPTR dlist){
 	while(temp->next != NULL)
 		temp = temp->next;
 
-	printf("\t Enter the newnode :\t");
+	printf("\n\t Enter the newnode :\t");
 	newnode = (struct node*) malloc(sizeof(struct node));
     scanf("%d",&newnode->data);
     newnode->next = NULL;
@@ -93,14 +94,14 @@ NODEPTR insBet(NODEPTR dlist){
 	NODEPTR temp,newnode;
 	temp = dlist;
 
-	printf("Enter the position");
+	printf("\n\t Enter the position :\t");
 	scanf("%d",&pos);
-
+	//use  for lop here...
 	while(count < pos-1){
 		temp = temp->next;
 		count++;
 	}
-		printf("Enter newnode");
+		printf("\n\t Enter newnode :\t");
 
 		newnode = (struct node*) malloc(sizeof(struct node));
 		scanf("%d",&newnode->data);
@@ -114,35 +115,54 @@ NODEPTR insBet(NODEPTR dlist){
 
 }
 NODEPTR delBeg(NODEPTR dlist){
-		NODEPTR temp;
-		temp = dlist;
-		dlist = temp->next;
-		dlist->prev = NULL;
-		free(temp);
+	NODEPTR temp;
+	temp = dlist;
+	dlist = temp->next;
+	dlist->prev = NULL;
+	free(temp);
+
     return(dlist);
 }
 
 NODEPTR delEnd(NODEPTR dlist){
-		NODEPTR temp;
-	    temp = dlist;
-		while(temp->next != NULL)
-			temp = temp->next;
-
-		(temp->prev)->next = NULL;
-		free(temp);
+	NODEPTR temp = dlist,temp1;
+	while(temp->next){
+        temp1 = temp;
+		temp = temp->next;
+	}
+    temp1->next = NULL;
+    free(temp);
 	return(dlist);
 }
 
 NODEPTR delBet(NODEPTR dlist){
-    NODEPTR  temp,temp1;
+    NODEPTR  temp = dlist, temp1, temp2;
     int count ,pos;
     printf("\n\t Enter Position :\t");
     scanf("%d", &pos);
-    for(count = 1; count < pos-1; count++)
+    for(count = 0; count < pos-1; count++){
+        temp1 = temp;
+        temp = temp->next;
+    }
+    temp2 = temp->next;
+    temp1->next = temp2;
+    temp2->prev = temp1;
+    free(temp);
 
-	 return(dlist);
+	return(dlist);
 }
 
+void menu(){
+	printf("\n\t ***operation of Insertion ***");
+	printf("\n\t 1  Insert begin");
+	printf("\n\t 2  Insert End");
+	printf("\n\t 3  Insert Between");
+	printf("\n\t 4  Delete begin");
+	printf("\n\t 5  Delete End");
+	printf("\n\t 6  Delete  Between");
+	printf("\n\t 7  Exit.");
+	printf("\n\t ----------------------------------\n");
+}
 
 int main(){
 
@@ -153,46 +173,44 @@ int main(){
 	disList(dlist);
 
 	 do{
-	 	printf("\n\t ***operation of Insertion ***");
-	 	printf("\n\t 1  Insert begin");
-	 	printf("\n\t 2  Insert End");
-	 	printf("\n\t 3  Insert Between");
-	 	printf("\n\t 4  Delete begin");
-	 	printf("\n\t 5  Delete End");
-	 	printf("\n\t 6  Delete  Between");
-
+	 	menu();
 	 	printf("\n\t Enter your choice :-\t");
 	 	scanf("%d",&choice);
 
 	 	switch(choice){
-	 		case 1: dlist = insBeg(dlist);
-			        disList(dlist);
+	 		case 1 :
+				dlist = insBeg(dlist);
+			    disList(dlist);
 	 		break;
-
-	 	    case 2: insEnd(dlist);
-			 		disList(dlist);
+	 	    case 2 :
+				insEnd(dlist);
+			 	disList(dlist);
 	 		break;
-
-	 		case 3: insBet(dlist);
-			        disList(dlist);
+	 		case 3 :
+				insBet(dlist);
+			    disList(dlist);
 	 		break;
-
-	 		case 4: dlist = delBeg(dlist);
-	 	    	    disList(dlist);
+	 		case 4 :
+				dlist = delBeg(dlist);
+	 	    	disList(dlist);
 	 		break;
-
-	 		case 5: dlist = delEnd(dlist);
-			 		disList(dlist);
+	 		case 5 :
+				dlist = delEnd(dlist);
+			 	disList(dlist);
 	 		break;
-
-	 		case 6: delBet(dlist);
-			 		disList(dlist);
+	 		case 6 :
+				delBet(dlist);
+			 	disList(dlist);
 	 		break;
+            case 7 :
+                exit(0);
+            break;
+			default : printf("\n\t Invalide choice...");
 
 		 }
 
 
-	 }while(choice != 7);
+	 }while(choice);
 
 	return(0);
 }
