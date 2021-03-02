@@ -15,7 +15,7 @@ typedef struct node *NODEPTR ;
 
  NODEPTR CREATELIST(){
 	
-     	    NODEPTR slist=NULL,temp,newnode;
+     NODEPTR slist=NULL,temp,newnode;
 	    int n,count;
  
                   printf("\n How many node are create = ");
